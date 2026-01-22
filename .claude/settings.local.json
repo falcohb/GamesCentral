@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php bin/console:*)",
+      "Bash(curl:*)",
+      "Bash(composer config:*)",
+      "Bash(composer install:*)",
+      "Bash(./vendor/bin/phpstan:*)",
+      "Bash(php -r:*)"
+    ]
+  }
+}

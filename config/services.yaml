@@ -7,6 +7,13 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.timezone: '%env(APP_TIMEZONE)%'
+    app.rss.gamekult: '%env(RSS_GAMEKULT)%'
+    app.rss.jeuxvideo: '%env(RSS_JEUXVIDEO)%'
+    app.rss.ign: '%env(RSS_IGN)%'
+    app.rss.gameblog: '%env(RSS_GAMEBLOG)%'
+    app.rss.jeuxonline: '%env(RSS_JEUXONLINE)%'
+    app.rss.gamergen: '%env(RSS_GAMERGEN)%'
 
 services:
     # default configuration for services in *this* file
@@ -21,3 +28,21 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\RssFeedAggregator:
+        arguments:
+            $timezone: '%app.timezone%'
+            $gamekultUrl: '%app.rss.gamekult%'
+            $jeuxvideoUrl: '%app.rss.jeuxvideo%'
+            $ignUrl: '%app.rss.ign%'
+            $gameblogUrl: '%app.rss.gameblog%'
+            $jeuxonlineUrl: '%app.rss.jeuxonline%'
+            $gamergenUrl: '%app.rss.gamergen%'
+
+    App\Service\TagExtractorFactory:
+        arguments:
+            $gameFranchisesPath: '%kernel.project_dir%/src/Config/game_franchises.php'
+            $gameStudiosPath: '%kernel.project_dir%/src/Config/game_studios.php'
+
+    App\Service\TagExtractor:
+        factory: ['@App\Service\TagExtractorFactory', 'create']

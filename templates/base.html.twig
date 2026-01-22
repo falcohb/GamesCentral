@@ -1,17 +1,77 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Toute l'actualit&eacute; des jeux vid&eacute;o sur une page.">
+    <meta name="author" content="Olivier Maloteau">
+    <meta name="keywords" content="jeux vid&eacute;o,actualit&eacute;,information,news,gamekult,jeuxvideo.com,gamers,games,videogames,xbox,playstation,nintendo">
+    {% block title %}<title>GamesCentral</title>{% endblock %}
+    <link href="{{ asset('img/favicon.ico') }}" rel="icon" type="image/x-icon">
+    {% block stylesheets %}{% endblock %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+</head>
+<body class="min-h-screen text-white">
+    {# Navigation - Command Bar #}
+    <nav class="nav-cyber sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                {# Logo & Branding #}
+                <a href="{{ path('home') }}" class="flex items-center gap-4 group">
+{#                    <div class="relative">#}
+{#                        <img src="{{ asset('img/logo.png') }}" alt="GamesCentral" class="h-10 relative z-10">#}
+{#                        <div class="absolute inset-0 bg-cyan-400 blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>#}
+{#                    </div>#}
+                    <div class="hidden sm:block">
+                        <span class="font-display text-sm text-cyan-400 glow-cyan block" data-text="GAMESCENTRAL">GAMESCENTRAL</span>
+                        <span class="font-mono text-xs text-gray-500">// NEWS_AGGREGATOR v8.0</span>
+                    </div>
+                </a>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
+                {# Mobile Menu Button #}
+                <button id="mobile-menu-btn" class="lg:hidden p-2 border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-400/10 transition-all">
+                    <svg class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                {# Desktop Navigation #}
+                <div class="hidden lg:flex items-center gap-1">
+                    <span class="font-mono text-xs text-gray-600 mr-4">[SOURCES]</span>
+                    <a href="https://www.gamekult.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-gamekult">gamekult</a>
+                    <a href="https://www.jeuxvideo.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-jvcom">jvc</a>
+                    <a href="https://www.gameblog.fr/" target="_blank" rel="noopener" class="nav-link-cyber nav-gameblog">gameblog</a>
+                    <a href="https://fr.ign.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-ign">ign</a>
+                    <a href="https://www.jeuxonline.info/" target="_blank" rel="noopener" class="nav-link-cyber nav-jeuxonline">jol</a>
+                    <a href="https://gamergen.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-gamergen">gamergen</a>
+                </div>
+            </div>
+
+            {# Mobile Menu #}
+            <div id="mobile-menu" class="hidden lg:hidden pb-4 border-t border-cyan-500/20 mt-2 pt-4">
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="https://www.gamekult.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-gamekult text-center">gamekult</a>
+                    <a href="https://www.jeuxvideo.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-jvcom text-center">jvc</a>
+                    <a href="https://www.gameblog.fr/" target="_blank" rel="noopener" class="nav-link-cyber nav-gameblog text-center">gameblog</a>
+                    <a href="https://fr.ign.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-ign text-center">ign</a>
+                    <a href="https://www.jeuxonline.info/" target="_blank" rel="noopener" class="nav-link-cyber nav-jeuxonline text-center">jol</a>
+                    <a href="https://gamergen.com/" target="_blank" rel="noopener" class="nav-link-cyber nav-gamergen text-center">gamergen</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
         {% block body %}{% endblock %}
-    </body>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    {% block javascripts %}{% endblock %}
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
 </html>

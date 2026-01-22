@@ -1,3 +1,573 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GAMESCENTRAL - CYBERPUNK GAMING TERMINAL
+   A futuristic HUD-inspired design with neon accents and glitch effects
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Theme Variables - Refined Color Palette with Neon Glow
+   ───────────────────────────────────────────────────────────────────────────── */
+@theme {
+    /* Primary Accent - Muted Teal/Cyan */
+    --color-accent: #5b9ea6;
+    --color-accent-bright: #7ec8d2;
+    --color-accent-dim: #3d7a82;
+    --color-accent-glow: rgba(91, 158, 166, 0.6);
+
+    /* Secondary Accent - Soft Amber */
+    --color-secondary: #c9a66b;
+    --color-secondary-dim: #a68a55;
+
+    /* Source Colors - Desaturated, Sophisticated */
+    --color-gamekult: #c45c5c;
+    --color-jvcom: #5b9ea6;
+    --color-ign: #bf2b2b;
+    --color-gameblog: #9b7bb0;
+    --color-jeuxonline: #c9a66b;
+    --color-gamergen: #5eb8a2;
+
+    /* Base - Deep Charcoal Tones */
+    --color-void: #0a0a0f;
+    --color-surface: #12121a;
+    --color-surface-elevated: #1a1a25;
+    --color-border: #2a2f38;
+    --color-border-subtle: #22262d;
+
+    /* Text Hierarchy */
+    --color-text-primary: #e8eaed;
+    --color-text-secondary: #9ca3af;
+    --color-text-muted: #5c6370;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Base & Background
+   ───────────────────────────────────────────────────────────────────────────── */
 body {
-    background-color: skyblue;
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--color-void);
+    color: var(--color-text-primary);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated grid background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(rgba(91, 158, 166, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91, 158, 166, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+    animation: gridPulse 4s ease-in-out infinite;
+}
+
+/* Scanline effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+}
+
+@keyframes gridPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Typography
+   ───────────────────────────────────────────────────────────────────────────── */
+.font-display {
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.font-mono {
+    font-family: 'Share Tech Mono', monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Neon Glow Effects
+   ───────────────────────────────────────────────────────────────────────────── */
+.glow-cyan {
+    text-shadow:
+        0 0 5px var(--color-accent),
+        0 0 10px var(--color-accent),
+        0 0 20px var(--color-accent),
+        0 0 40px var(--color-accent-glow);
+}
+
+.glow-magenta {
+    text-shadow:
+        0 0 5px var(--color-gameblog),
+        0 0 10px var(--color-gameblog),
+        0 0 20px rgba(155, 123, 176, 0.5);
+}
+
+.box-glow-cyan {
+    box-shadow:
+        0 0 5px var(--color-accent),
+        0 0 10px rgba(91, 158, 166, 0.4),
+        inset 0 0 15px rgba(91, 158, 166, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Navigation - Command Bar Style
+   ───────────────────────────────────────────────────────────────────────────── */
+.nav-cyber {
+    background: linear-gradient(180deg, rgba(18, 18, 26, 0.95) 0%, rgba(10, 10, 15, 0.98) 100%);
+    border-bottom: 1px solid var(--color-accent);
+    box-shadow:
+        0 1px 0 var(--color-accent),
+        0 4px 30px rgba(91, 158, 166, 0.25);
+    backdrop-filter: blur(10px);
+}
+
+.nav-link-cyber {
+    position: relative;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    background: transparent;
+}
+
+.nav-link-cyber::before {
+    content: '//';
+    opacity: 0.3;
+    margin-right: 0.25rem;
+}
+
+.nav-link-cyber:hover {
+    background: rgba(91, 158, 166, 0.15);
+    color: var(--color-accent-bright);
+    text-shadow: 0 0 10px var(--color-accent);
+}
+
+/* Source-specific nav colors */
+.nav-gamekult:hover { color: var(--color-gamekult); text-shadow: 0 0 10px var(--color-gamekult), 0 0 20px rgba(196, 92, 92, 0.5); background: rgba(196, 92, 92, 0.1); }
+.nav-jvcom:hover { color: var(--color-jvcom); text-shadow: 0 0 10px var(--color-jvcom), 0 0 20px rgba(91, 158, 166, 0.5); background: rgba(91, 158, 166, 0.1); }
+.nav-ign:hover { color: var(--color-ign); text-shadow: 0 0 10px var(--color-ign), 0 0 20px rgba(191, 43, 43, 0.5); background: rgba(191, 43, 43, 0.1); }
+.nav-gameblog:hover { color: var(--color-gameblog); text-shadow: 0 0 10px var(--color-gameblog), 0 0 20px rgba(155, 123, 176, 0.5); background: rgba(155, 123, 176, 0.1); }
+.nav-jeuxonline:hover { color: var(--color-jeuxonline); text-shadow: 0 0 10px var(--color-jeuxonline), 0 0 20px rgba(201, 166, 107, 0.5); background: rgba(201, 166, 107, 0.1); }
+.nav-gamergen:hover { color: var(--color-gamergen); text-shadow: 0 0 10px var(--color-gamergen), 0 0 20px rgba(94, 184, 162, 0.5); background: rgba(94, 184, 162, 0.1); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Cards - HUD Panels
+   ───────────────────────────────────────────────────────────────────────────── */
+.card-hud {
+    background: linear-gradient(135deg, rgba(18, 18, 26, 0.9) 0%, rgba(26, 26, 37, 0.8) 100%);
+    border: 1px solid var(--color-border);
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    transition: all 0.3s ease;
+}
+
+.card-hud::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: 0.6;
+}
+
+.card-hud::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border-left: 1px solid var(--color-accent);
+    border-bottom: 1px solid var(--color-accent);
+    transform: rotate(-45deg) translate(7px, -7px);
+    opacity: 0.6;
+}
+
+.card-hud:hover {
+    border-color: var(--color-accent);
+    box-shadow:
+        0 0 20px rgba(91, 158, 166, 0.25),
+        inset 0 0 30px rgba(91, 158, 166, 0.05);
+}
+
+/* Corner decorations */
+.corner-tl, .corner-tr, .corner-bl, .corner-br {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: var(--color-accent);
+    opacity: 0.7;
+}
+.corner-tl { top: 5px; left: 5px; border-top: 2px solid; border-left: 2px solid; }
+.corner-tr { top: 5px; right: 25px; border-top: 2px solid; border-right: 2px solid; }
+.corner-bl { bottom: 25px; left: 5px; border-bottom: 2px solid; border-left: 2px solid; }
+.corner-br { bottom: 5px; right: 5px; border-bottom: 2px solid; border-right: 2px solid; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Article Cards - Source Styled
+   ───────────────────────────────────────────────────────────────────────────── */
+.article-cyber {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-cyber::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.article-cyber::after {
+    content: 'DATA_STREAM';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.1em;
+}
+
+/* Source-specific styling */
+.article-cyber.gamekult::before { background: var(--color-gamekult); box-shadow: 0 0 8px var(--color-gamekult); }
+.article-cyber.gamekult::after { content: 'GK://'; color: var(--color-gamekult); }
+.article-cyber.gamekult:hover { border-color: var(--color-gamekult); box-shadow: 0 0 20px rgba(196, 92, 92, 0.35), inset 0 0 30px rgba(196, 92, 92, 0.08); }
+
+.article-cyber.jvcom::before { background: var(--color-jvcom); box-shadow: 0 0 8px var(--color-jvcom); }
+.article-cyber.jvcom::after { content: 'JVC://'; color: var(--color-jvcom); }
+.article-cyber.jvcom:hover { border-color: var(--color-jvcom); box-shadow: 0 0 20px rgba(91, 158, 166, 0.35), inset 0 0 30px rgba(91, 158, 166, 0.08); }
+
+.article-cyber.ign::before { background: var(--color-ign); box-shadow: 0 0 8px var(--color-ign); }
+.article-cyber.ign::after { content: 'IGN://'; color: var(--color-ign); }
+.article-cyber.ign:hover { border-color: var(--color-ign); box-shadow: 0 0 20px rgba(191, 43, 43, 0.35), inset 0 0 30px rgba(191, 43, 43, 0.08); }
+
+.article-cyber.gameblog::before { background: var(--color-gameblog); box-shadow: 0 0 8px var(--color-gameblog); }
+.article-cyber.gameblog::after { content: 'GB://'; color: var(--color-gameblog); }
+.article-cyber.gameblog:hover { border-color: var(--color-gameblog); box-shadow: 0 0 20px rgba(155, 123, 176, 0.35), inset 0 0 30px rgba(155, 123, 176, 0.08); }
+
+.article-cyber.jeuxonline::before { background: var(--color-jeuxonline); box-shadow: 0 0 8px var(--color-jeuxonline); }
+.article-cyber.jeuxonline::after { content: 'JOL://'; color: var(--color-jeuxonline); }
+.article-cyber.jeuxonline:hover { border-color: var(--color-jeuxonline); box-shadow: 0 0 20px rgba(201, 166, 107, 0.35), inset 0 0 30px rgba(201, 166, 107, 0.08); }
+
+.article-cyber.gamergen::before { background: var(--color-gamergen); box-shadow: 0 0 8px var(--color-gamergen); }
+.article-cyber.gamergen::after { content: 'GG://'; color: var(--color-gamergen); }
+.article-cyber.gamergen:hover { border-color: var(--color-gamergen); box-shadow: 0 0 20px rgba(94, 184, 162, 0.35), inset 0 0 30px rgba(94, 184, 162, 0.08); }
+
+/* Article panel animation */
+.article-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-panel.open {
+    max-height: 500px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Tags - Neon Glitch Style
+   ───────────────────────────────────────────────────────────────────────────── */
+.tag-cyber {
+    font-family: 'Share Tech Mono', monospace;
+    background: rgba(91, 158, 166, 0.1);
+    border: 1px solid rgba(91, 158, 166, 0.4);
+    color: var(--color-accent);
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.03em;
+    position: relative;
+    transition: all 0.2s ease;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+
+.tag-cyber::before {
+    content: '#';
+    opacity: 0.5;
+    margin-right: 2px;
+}
+
+.tag-cyber:hover {
+    background: rgba(91, 158, 166, 0.2);
+    border-color: var(--color-accent);
+    color: var(--color-accent-bright);
+    text-shadow:
+        0 0 5px var(--color-accent),
+        0 0 10px var(--color-accent),
+        0 0 20px var(--color-accent-glow);
+    box-shadow:
+        0 0 10px rgba(91, 158, 166, 0.4),
+        0 0 20px rgba(91, 158, 166, 0.2),
+        inset 0 0 10px rgba(91, 158, 166, 0.1);
+    transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Stats Counter - Digital Display
+   ───────────────────────────────────────────────────────────────────────────── */
+.counter-digital {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    background: linear-gradient(180deg, var(--color-accent-bright) 0%, var(--color-accent-dim) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px var(--color-accent)) drop-shadow(0 0 20px var(--color-accent-glow));
+    animation: digitalFlicker 3s ease-in-out infinite;
+}
+
+@keyframes digitalFlicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.8; }
+    94% { opacity: 1; }
+    96% { opacity: 0.9; }
+    97% { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Section Headers - Terminal Style
+   ───────────────────────────────────────────────────────────────────────────── */
+.section-header {
+    font-family: 'Orbitron', monospace;
+    position: relative;
+    display: inline-block;
+    padding-left: 1.5rem;
+}
+
+.section-header::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    text-shadow:
+        0 0 5px var(--color-accent),
+        0 0 10px var(--color-accent),
+        0 0 20px var(--color-accent-glow);
+    animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-accent), transparent);
+    box-shadow: 0 0 10px var(--color-accent-glow);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Filters - Toggle Switches
+   ───────────────────────────────────────────────────────────────────────────── */
+.filter-toggle {
+    appearance: none;
+    width: 40px;
+    height: 20px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-toggle::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: var(--color-border);
+    transition: all 0.3s ease;
+}
+
+.filter-toggle:checked {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(91, 158, 166, 0.4);
+}
+
+.filter-toggle:checked::before {
+    left: 22px;
+    background: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Glitch Effect
+   ───────────────────────────────────────────────────────────────────────────── */
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitchTop 1s linear infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch::after {
+    animation: glitchBottom 1.5s linear infinite;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchTop {
+    2%, 64% { transform: translate(2px, -2px); }
+    4%, 60% { transform: translate(-2px, 2px); }
+    62% { transform: translate(13px, -1px) skew(-13deg); }
+}
+
+@keyframes glitchBottom {
+    2%, 64% { transform: translate(-2px, 0); }
+    4%, 60% { transform: translate(-2px, 0); }
+    62% { transform: translate(-22px, 5px) skew(21deg); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Loading Animation
+   ───────────────────────────────────────────────────────────────────────────── */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeSlideIn 0.5s ease-out forwards;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Chart Container
+   ───────────────────────────────────────────────────────────────────────────── */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#chartPie {
+    width: 200px !important;
+    height: 200px !important;
+    filter: drop-shadow(0 0 15px rgba(91, 158, 166, 0.5));
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Scrollbar Styling
+   ───────────────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-void);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border: 1px solid var(--color-accent-dim);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Footer - System Status
+   ───────────────────────────────────────────────────────────────────────────── */
+.footer-cyber {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.3);
+    border-top: 1px solid var(--color-border);
+    position: relative;
+}
+
+.footer-cyber::before {
+    content: 'SYSTEM_STATUS: ONLINE';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-void);
+    padding: 0 1rem;
+    color: var(--color-ign);
+    font-size: 0.6rem;
+    text-shadow: 0 0 10px var(--color-ign);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Responsive Adjustments
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .card-hud {
+        clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+    }
+
+    .nav-link-cyber {
+        font-size: 0.65rem;
+        padding: 0.5rem 0.75rem;
+    }
 }
