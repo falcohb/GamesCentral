@@ -117,10 +117,18 @@ The application is available at **http://localhost:8000**
 ## Useful Commands
 
 ```bash
-# Development
+# Development (via Makefile)
+make run                              # Start Symfony server (daemon)
+make abort                            # Stop Symfony server
+make php-stan                         # Run PHPStan analysis
+
+# Development (manual)
 php bin/console cache:clear           # Clear Symfony cache
 php bin/console tailwind:build        # Build Tailwind CSS
 php bin/console tailwind:build -w     # Watch mode (auto-rebuild)
+
+# Static Analysis
+./vendor/bin/phpstan analyse          # Run PHPStan (level 8)
 
 # Debugging
 php bin/console debug:router          # List routes
@@ -147,24 +155,29 @@ gamescentral/
 ├── public/
 │   └── img/                   # Static assets (logo, favicon)
 ├── src/
+│   ├── Config/
+│   │   ├── game_franchises.php    # ~100 game franchise patterns
+│   │   └── game_studios.php       # ~90 studio/publisher patterns
 │   ├── Controller/
-│   │   └── HomeController.php # Main routes (/, /tag/{tag}, /api/counts)
+│   │   └── HomeController.php     # Main routes (/, /tag/{tag}, /api/counts)
 │   ├── DTO/
-│   │   ├── Article.php        # Article Data Transfer Object (readonly)
-│   │   └── FeedSource.php     # RSS source configuration
+│   │   ├── Article.php            # Article Data Transfer Object (readonly)
+│   │   └── FeedSource.php         # RSS source configuration
 │   ├── Service/
 │   │   ├── RssFeedAggregator.php  # RSS feed aggregation and caching
-│   │   └── TagExtractor.php       # Tag extraction from titles
+│   │   ├── TagExtractor.php       # Tag extraction from titles
+│   │   └── TagExtractorFactory.php # Factory for TagExtractor
 │   └── Twig/
-│       └── AppExtension.php   # Custom Twig filters and functions
+│       └── AppExtension.php       # Custom Twig filters and functions
 ├── templates/
 │   ├── base.html.twig         # Main layout
 │   └── home/
 │       └── index.html.twig    # Homepage
-└── assets/
-    ├── app.js                 # Main JavaScript (Stimulus)
-    └── styles/
-        └── app.css            # Tailwind styles + cyberpunk theme
+├── assets/
+│   ├── app.js                 # Main JavaScript (Stimulus)
+│   └── styles/
+│       └── app.css            # Tailwind styles + cyberpunk theme
+└── Makefile                   # Development commands (run, abort, php-stan)
 ```
 
 ### Data Flow
@@ -182,6 +195,17 @@ gamescentral/
                     └──────────────────┘        └───────────────┘
 ```
 
+### Tag Extraction
+
+The `TagExtractor` service analyzes article titles to extract trending topics:
+
+1. **Known Franchises** — Matches ~100 game franchise patterns (Call of Duty, Zelda, Final Fantasy, etc.)
+2. **Known Studios** — Matches ~90 studio/publisher patterns (Ubisoft, Rockstar, Capcom, etc.)
+3. **Generic Names** — Extracts capitalized word sequences as potential game titles
+4. **Filtering** — Excludes common words, geographic names, and requires minimum occurrences (2+)
+
+Patterns are defined in `src/Config/game_franchises.php` and `src/Config/game_studios.php` for easy maintenance.
+
 ---
 
 ## Tech Stack
@@ -190,12 +214,13 @@ gamescentral/
 |----------|-------------|
 | **Backend** | PHP 8.4, Symfony 8.0, Doctrine ORM |
 | **RSS** | Laminas Feed |
-| **Frontend** | Twig, Tailwind CSS, Stimulus.js, Turbo |
+| **Frontend** | Twig, Tailwind CSS, Stimulus.js, Turbo.js |
 | **Assets** | Symfony Asset Mapper |
 | **Charts** | Chart.js |
 | **Cache** | Symfony Cache (filesystem) |
 | **Database** | PostgreSQL 16 |
-| **Dev Tools** | Docker, Mailpit |
+| **Static Analysis** | PHPStan (level 8) |
+| **Dev Tools** | Docker, Mailpit, Makefile |
 
 ---
 
