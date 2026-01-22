@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of a Symfony Application built by Enabel.
+ * Copyright (c) Enabel <https://github.com/Enabel>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Service\RssFeedAggregator;
@@ -15,7 +22,8 @@ final class HomeController extends AbstractController
     public function __construct(
         private readonly RssFeedAggregator $feedAggregator,
         private readonly TagExtractor $tagExtractor,
-    ) {}
+    ) {
+    }
 
     #[Route('/', name: 'home')]
     #[Route('/tag/{tag}', name: 'search')]
@@ -28,7 +36,7 @@ final class HomeController extends AbstractController
         $tags = $this->tagExtractor->extract($articles);
 
         // Filter by tag if provided
-        if ($tag !== null) {
+        if (null !== $tag) {
             $articles = $this->tagExtractor->filterByTag($articles, $tag);
         }
 

@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-/**
- * Game franchises with trigger words and their canonical names.
- * The key is a trigger word, the value contains patterns to match the full game name.
- *
- * @return array<string, array{franchise: string, pattern: string}>
+/*
+ * This file is part of a Symfony Application built by Enabel.
+ * Copyright (c) Enabel <https://github.com/Enabel>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 return [
     // Call of Duty - specific subtitles first (more specific patterns)
     'Black Ops' => ['franchise' => 'Call of Duty Black Ops', 'pattern' => '/(?:Call\s+of\s+Duty\s*:?\s*)?Black\s+Ops(?:\s+[IVX\d]+)?/iu'],

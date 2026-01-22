@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of a Symfony Application built by Enabel.
+ * Copyright (c) Enabel <https://github.com/Enabel>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Twig;
 
 use Twig\Extension\AbstractExtension;
@@ -49,16 +56,19 @@ final class AppExtension extends AbstractExtension
 
         if ($diff < 3600) {
             $minutes = (int) floor($diff / 60);
-            return $minutes . ' minute' . ($minutes > 1 ? 's' : '');
+
+            return $minutes.' minute'.($minutes > 1 ? 's' : '');
         }
 
         if ($diff < 86400) {
             $hours = (int) floor($diff / 3600);
-            return $hours . ' heure' . ($hours > 1 ? 's' : '');
+
+            return $hours.' heure'.($hours > 1 ? 's' : '');
         }
 
         $days = (int) floor($diff / 86400);
-        return $days . ' jour' . ($days > 1 ? 's' : '');
+
+        return $days.' jour'.($days > 1 ? 's' : '');
     }
 
     /**
@@ -76,9 +86,9 @@ final class AppExtension extends AbstractExtension
     {
         return match (true) {
             $count >= 6 => '0.9rem',
-            $count === 5 => '0.85rem',
-            $count === 4 => '0.8rem',
-            $count === 3 => '0.75rem',
+            5 === $count => '0.85rem',
+            4 === $count => '0.8rem',
+            3 === $count => '0.75rem',
             default => '0.7rem',
         };
     }

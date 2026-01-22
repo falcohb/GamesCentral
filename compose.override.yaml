@@ -1,12 +1,15 @@
-
 services:
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
   database:
     ports:
-      - "5432"
-###< doctrine/doctrine-bundle ###
+      - "3306"
+  ###< doctrine/doctrine-bundle ###
 
-###> symfony/mailer ###
+  redis:
+    ports:
+      - "6379"
+
+  ###> symfony/mailer ###
   mailer:
     image: axllent/mailpit
     ports:
@@ -15,4 +18,24 @@ services:
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
-###< symfony/mailer ###
+  ###< symfony/mailer ###
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "80"
+    depends_on:
+      - database
+    environment:
+      PMA_HOST: database
+      PMA_USER: root
+
+  phpredisadmin:
+    image: erikdubbelboer/phpredisadmin
+    ports:
+      - "80"
+    depends_on:
+      - redis
+    environment:
+      REDIS_1_HOST: redis
+      REDIS_1_NAME: Docker

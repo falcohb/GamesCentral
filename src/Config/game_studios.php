@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-/**
- * Famous game studios and publishers.
- *
- * @return array<string, string>
+/*
+ * This file is part of a Symfony Application built by Enabel.
+ * Copyright (c) Enabel <https://github.com/Enabel>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 return [
     // Major Publishers
     'Ubisoft' => '/\bUbisoft(?:\s+(?:Montreal|Quebec|Paris|Toronto|Singapore|Sofia|Bordeaux|Montpellier))?\b/iu',

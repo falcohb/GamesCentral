@@ -9,12 +9,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App;
+namespace App\Story;
 
-use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use Zenstruck\Foundry\Attribute\AsFixture;
+use Zenstruck\Foundry\Story;
 
-class Kernel extends BaseKernel
+#[AsFixture(name: 'main')]
+final class AppStory extends Story
 {
-    use MicroKernelTrait;
+    public function build(): void
+    {
+        // SomeFactory::createOne();
+    }
 }

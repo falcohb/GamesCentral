@@ -10,6 +10,7 @@
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
+        "enabel/coding-standard-bundle": "^4.1",
         "laminas/laminas-feed": "^2.26",
         "laminas/laminas-http": "^2.23",
         "phpdocumentor/reflection-docblock": "^6.0",
@@ -50,10 +51,11 @@
     },
     "config": {
         "allow-plugins": {
+            "ergebnis/composer-normalize": true,
             "php-http/discovery": true,
+            "phpstan/extension-installer": true,
             "symfony/flex": true,
-            "symfony/runtime": true,
-            "phpstan/extension-installer": true
+            "symfony/runtime": true
         },
         "bump-after-update": true,
         "sort-packages": true
@@ -98,11 +100,16 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "endpoint": [
+                "https://api.github.com/repos/Enabel/recipes/contents/index.json?ref=flex/main",
+                "flex://defaults"
+            ],
+            "allow-contrib": true,
             "require": "8.0.*"
         }
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^8.6",
         "phpstan/extension-installer": "*",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-symfony": "*",
@@ -112,6 +119,7 @@
         "symfony/debug-bundle": "8.0.*",
         "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "8.0.*",
-        "symfony/web-profiler-bundle": "8.0.*"
+        "symfony/web-profiler-bundle": "8.0.*",
+        "zenstruck/foundry": "^2.8"
     }
 }

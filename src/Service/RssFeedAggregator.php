@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of a Symfony Application built by Enabel.
+ * Copyright (c) Enabel <https://github.com/Enabel>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\DTO\Article;
@@ -11,8 +18,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
-final class
-RssFeedAggregator
+final class RssFeedAggregator
 {
     private const CACHE_TTL = 300; // 5 minutes
 
@@ -64,7 +70,7 @@ RssFeedAggregator
                     // Count today's articles
                     $counts[$source->name] = count(array_filter(
                         $feedArticles,
-                        fn(Article $a) => $a->isFromToday($today)
+                        fn (Article $a) => $a->isFromToday($today),
                     ));
                 } catch (\Exception $e) {
                     $this->logger->error('Failed to fetch RSS feed', [
@@ -77,7 +83,7 @@ RssFeedAggregator
             }
 
             // Sort by publication date (newest first)
-            usort($articles, fn(Article $a, Article $b) => $b->publishedAt <=> $a->publishedAt);
+            usort($articles, fn (Article $a, Article $b) => $b->publishedAt <=> $a->publishedAt);
 
             return [
                 'articles' => $articles,
@@ -99,7 +105,7 @@ RssFeedAggregator
         foreach ($feed as $item) {
             $date = $item->getDateModified() ?? $item->getDateCreated();
 
-            if ($date === null) {
+            if (!$date instanceof \DateTime) {
                 continue;
             }
 
@@ -107,12 +113,17 @@ RssFeedAggregator
                 ->setTimezone($tz);
 
             // Double decode for feeds with double-encoded entities (e.g., &amp;#x27; -> &#x27; -> ')
-            $title = html_entity_decode(html_entity_decode($item->getTitle() ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            $description = html_entity_decode(html_entity_decode($item->getDescription() ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $rawTitle = $item->getTitle();
+            $rawDescription = $item->getDescription();
+            $rawLink = $item->getLink();
+
+            $title = is_string($rawTitle) ? html_entity_decode(html_entity_decode($rawTitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'), ENT_QUOTES | ENT_HTML5, 'UTF-8') : '';
+            $description = is_string($rawDescription) ? html_entity_decode(html_entity_decode($rawDescription, ENT_QUOTES | ENT_HTML5, 'UTF-8'), ENT_QUOTES | ENT_HTML5, 'UTF-8') : '';
+            $link = is_string($rawLink) ? $rawLink : '';
 
             $articles[] = new Article(
                 title: $title,
-                link: $item->getLink() ?? '',
+                link: $link,
                 description: $description,
                 publishedAt: $publishedAt,
                 source: $source->name,

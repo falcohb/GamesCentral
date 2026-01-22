@@ -19,3 +19,11 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> enabel/coding-standard-bundle ###
+.php-cs-fixer.cache
+!/docker/db/data/.gitignore
+!/docker/redis/data/.gitignore
+!/public/coverage/.gitignore
+!/var/coverage/.gitignore
+###< enabel/coding-standard-bundle ###

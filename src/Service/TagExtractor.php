@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of a Symfony Application built by Enabel.
+ * Copyright (c) Enabel <https://github.com/Enabel>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\DTO\Article;
@@ -28,7 +35,7 @@ final readonly class TagExtractor
         'jeu', 'jeux', 'game', 'games', 'gaming', 'joueur', 'joueurs', 'player', 'players',
         'nouveau', 'nouvelle', 'nouveaux', 'nouvelles', 'new', 'premier', 'première',
         'meilleur', 'meilleure', 'best', 'top', 'pire', 'worst',
-        'année', 'year', 'mois', 'month', 'semaine', 'week', 'jour', 'day',
+        'année', 'year', 'mois', 'month', 'semaine', 'week', 'jour', 'day', 'mémoire',
     ];
 
     private const int MIN_OCCURRENCES = 2;
@@ -50,6 +57,7 @@ final readonly class TagExtractor
      * Extracts popular tags from article titles.
      *
      * @param array<Article> $articles
+     *
      * @return array<string, int> Tags with their occurrence count
      */
     public function extract(array $articles): array
@@ -71,7 +79,7 @@ final readonly class TagExtractor
         // Filter tags that appear at least MIN_OCCURRENCES times
         $popularTags = array_filter(
             $occurrences,
-            fn(int $count) => $count >= self::MIN_OCCURRENCES
+            fn (int $count) => $count >= self::MIN_OCCURRENCES,
         );
 
         // Sort by occurrence count (descending)
@@ -103,7 +111,7 @@ final readonly class TagExtractor
         $tags = array_merge($tags, $genericTags);
 
         // Remove duplicates and clean up
-        return array_unique(array_filter($tags, static fn(string $tag) => strlen($tag) >= self::MIN_TAG_LENGTH));
+        return array_unique(array_filter($tags, static fn (string $tag) => strlen($tag) >= self::MIN_TAG_LENGTH));
     }
 
     /**
@@ -118,7 +126,7 @@ final readonly class TagExtractor
 
         foreach ($this->gameFranchises as $trigger => $config) {
             // Check if the trigger word is in the remaining title
-            if (stripos($remainingTitle, $trigger) === false) {
+            if (false === stripos($remainingTitle, $trigger)) {
                 continue;
             }
 
@@ -190,7 +198,7 @@ final readonly class TagExtractor
         $delimiters = [' - ', ' : ', ' | ', ', ', ' – ', ' — '];
         foreach ($delimiters as $delimiter) {
             $pos = strpos($name, $delimiter);
-            if ($pos !== false && $pos > 10) {
+            if (false !== $pos && $pos > 10) {
                 $name = substr($name, 0, $pos);
                 break;
             }
@@ -219,7 +227,7 @@ final readonly class TagExtractor
         preg_match_all(
             "/\b([A-Z][a-zàâäéèêëïîôùûüç]*(?:[''][a-zàâäéèêëïîôùûüç]+)?(?:\s*(?:[-:]\s*)?(?:[A-Z][a-zàâäéèêëïîôùûüç]*|[IVXLCDM]+|\d+))*)\b/u",
             $title,
-            $matches
+            $matches,
         );
 
         foreach ($matches[0] as $match) {
@@ -237,7 +245,7 @@ final readonly class TagExtractor
             }
 
             // Skip if it's just a single common word
-            if ($wordCount === 1 && strlen($tag) < 4) {
+            if (1 === $wordCount && strlen($tag) < 4) {
                 continue;
             }
 
@@ -284,6 +292,7 @@ final readonly class TagExtractor
      * Filter articles by tag.
      *
      * @param array<Article> $articles
+     *
      * @return array<Article>
      */
     public function filterByTag(array $articles, string $tag): array
@@ -292,7 +301,7 @@ final readonly class TagExtractor
 
         return array_filter(
             $articles,
-            fn(Article $article) => stripos($article->title, $decodedTag) !== false
+            fn (Article $article) => false !== stripos($article->title, $decodedTag),
         );
     }
 }

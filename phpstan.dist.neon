@@ -1,0 +1,33 @@
+parameters:
+    level: 8
+
+    paths:
+        - src
+        - tests
+
+    excludePaths:
+        - tests/bootstrap.php
+
+    # Performance
+    tmpDir: var/cache/phpstan
+    parallel:
+        maximumNumberOfProcesses: 4
+
+    # Inférence de types
+    inferPrivatePropertyTypeFromConstructor: true
+    treatPhpDocTypesAsCertain: false
+
+    # Détection des erreurs cachées
+    checkUninitializedProperties: true
+    checkDynamicProperties: true
+    checkImplicitMixed: true
+
+    symfony:
+        constantHassers: false
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+        consoleApplicationLoader: tools/phpstan/console-application.php
+
+    ignoreErrors:
+        -
+            identifier: missingType.generics
+            reportUnmatched: false
