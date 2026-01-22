@@ -5,7 +5,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.4+-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
 [![Symfony](https://img.shields.io/badge/Symfony-8.0-000000?style=flat-square&logo=symfony&logoColor=white)](https://symfony.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
 ---
 
@@ -255,7 +255,7 @@ Returns today's article count per source.
 
 ## License
 
-This project is under proprietary license. All rights reserved.
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
