@@ -291,6 +291,14 @@ body::after {
 .article-cyber.gamergen::after { content: 'GG://'; color: var(--color-gamergen); }
 .article-cyber.gamergen:hover { border-color: var(--color-gamergen); box-shadow: 0 0 20px rgba(94, 184, 162, 0.35), inset 0 0 30px rgba(94, 184, 162, 0.08); }
 
+/* Article title hover colors per source */
+.article-cyber.gamekult:hover .article-title { color: var(--color-gamekult); }
+.article-cyber.jvcom:hover .article-title { color: var(--color-jvcom); }
+.article-cyber.ign:hover .article-title { color: var(--color-ign); }
+.article-cyber.gameblog:hover .article-title { color: var(--color-gameblog); }
+.article-cyber.jeuxonline:hover .article-title { color: var(--color-jeuxonline); }
+.article-cyber.gamergen:hover .article-title { color: var(--color-gamergen); }
+
 /* Article panel animation */
 .article-panel {
     max-height: 0;
@@ -553,9 +561,9 @@ body::after {
     transform: translateX(-50%);
     background: var(--color-void);
     padding: 0 1rem;
-    color: var(--color-ign);
+    color: var(--color-gamergen);
     font-size: 0.6rem;
-    text-shadow: 0 0 10px var(--color-ign);
+    text-shadow: 0 0 10px var(--color-gamergen);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

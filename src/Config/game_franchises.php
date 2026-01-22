@@ -2,13 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of a Symfony Application built by Enabel.
- * Copyright (c) Enabel <https://github.com/Enabel>
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 return [
     // Call of Duty - specific subtitles first (more specific patterns)
     'Black Ops' => ['franchise' => 'Call of Duty Black Ops', 'pattern' => '/(?:Call\s+of\s+Duty\s*:?\s*)?Black\s+Ops(?:\s+[IVX\d]+)?/iu'],
