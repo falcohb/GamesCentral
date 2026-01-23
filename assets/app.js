@@ -104,14 +104,12 @@ document.addEventListener('turbo:load', function() {
         });
     });
 
-    // Staggered animation for articles
+    // Staggered animation for articles (fast)
     document.querySelectorAll('.article-cyber').forEach(function(article, index) {
         article.style.opacity = '0';
-        article.style.transform = 'translateY(20px)';
         setTimeout(function() {
-            article.style.transition = 'all 0.4s ease-out';
+            article.style.transition = 'opacity 0.15s ease-out';
             article.style.opacity = '1';
-            article.style.transform = 'translateY(0)';
-        }, 100 + (index * 50));
+        }, index * 15);
     });
 });
