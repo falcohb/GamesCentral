@@ -13,7 +13,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 final class RssFeedAggregator
 {
-    private const CACHE_TTL = 300; // 5 minutes
+    private const CACHE_TTL = 600; // 10 minutes
 
     /** @var array<FeedSource> */
     private array $sources;

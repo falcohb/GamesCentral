@@ -88,16 +88,16 @@ final class AppExtension extends AbstractExtension
 
     public function getToday(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable('today', new \DateTimeZone('Europe/Brussels'));
+        return (new \DateTimeImmutable('now', new \DateTimeZone('Europe/Brussels')))->setTime(0, 0, 0);
     }
 
     public function getYesterday(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable('yesterday', new \DateTimeZone('Europe/Brussels'));
+        return $this->getToday()->modify('-1 day');
     }
 
     public function getTwoDaysAgo(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable('-2 days', new \DateTimeZone('Europe/Brussels'));
+        return $this->getToday()->modify('-2 days');
     }
 }

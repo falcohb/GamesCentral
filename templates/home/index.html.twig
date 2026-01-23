@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-<title>GamesCentral - {{ 'now'|date('l d F', timezone='Europe/Brussels')|format_date(pattern='EEEE d MMMM', locale='fr') }}</title>
+<title>GamesCentral - {{ today()|format_date(pattern='EEEE d MMMM', locale='fr', timezone='Europe/Brussels') }}</title>
 {% endblock %}
 
 {% block body %}
@@ -88,7 +88,7 @@
         {# Today's articles #}
         <div class="animate-in" style="animation-delay: 0.1s">
             <h2 class="section-header text-xl text-white mb-6 pb-2 border-b border-cyan-500/30 capitalize">
-                {{ today()|format_date(pattern='EEEE d MMMM', locale='fr') }}
+                {{ today()|format_date(pattern='EEEE d MMMM', locale='fr', timezone='Europe/Brussels') }}
             </h2>
             <div class="space-y-4">
                 {% for article in articles %}
@@ -124,7 +124,7 @@
         {# Yesterday's articles #}
         <div class="animate-in" style="animation-delay: 0.2s">
             <h2 class="section-header text-xl text-white mb-6 pb-2 border-b border-cyan-500/30 capitalize">
-                {{ yesterday()|format_date(pattern='EEEE d MMMM', locale='fr') }}
+                {{ yesterday()|format_date(pattern='EEEE d MMMM', locale='fr', timezone='Europe/Brussels') }}
             </h2>
             <div class="space-y-4">
                 {% for article in articles %}
@@ -160,7 +160,7 @@
         {# Two days ago articles #}
         <div class="animate-in" style="animation-delay: 0.3s">
             <h2 class="section-header text-xl text-white mb-6 pb-2 border-b border-cyan-500/30 capitalize">
-                {{ two_days_ago()|format_date(pattern='EEEE d MMMM', locale='fr') }}
+                {{ two_days_ago()|format_date(pattern='EEEE d MMMM', locale='fr', timezone='Europe/Brussels') }}
             </h2>
             <div class="space-y-4">
                 {% for article in articles %}
