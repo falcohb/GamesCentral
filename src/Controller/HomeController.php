@@ -39,7 +39,7 @@ final class HomeController extends AbstractController
             'counts' => $feedData['counts'],
             'totalCount' => $feedData['totalCount'],
             'currentTag' => $tag,
-            'sources' => $this->feedAggregator->getSources(),
+            'sources' => $this->feedAggregator,
         ]);
     }
 

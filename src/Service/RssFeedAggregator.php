@@ -16,7 +16,11 @@ final class RssFeedAggregator
     private const CACHE_TTL = 300; // 5 minutes
 
     /** @var array<FeedSource> */
-    private array $sources;
+    public array $sources {
+        get {
+            return $this->sources;
+        }
+    }
 
     public function __construct(
         private readonly CacheInterface $cache,
@@ -132,11 +136,4 @@ final class RssFeedAggregator
             ->setTime(0, 0);
     }
 
-    /**
-     * @return array<FeedSource>
-     */
-    public function getSources(): array
-    {
-        return $this->sources;
-    }
 }
