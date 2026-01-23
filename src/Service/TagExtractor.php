@@ -9,23 +9,19 @@ use App\DTO\Article;
 final readonly class TagExtractor
 {
     private const array EXCLUDED_WORDS = [
-        // Articles et prépositions
         'le', 'la', 'les', 'des', 'un', 'une', 'du', 'de', 'au', 'aux',
         'et', 'ou', 'en', 'pour', 'avec', 'sans', 'sur', 'sous', 'dans',
         'ce', 'cette', 'ces', 'son', 'sa', 'ses', 'notre', 'nos',
         'the', 'a', 'an', 'of', 'to', 'and', 'or', 'for', 'with',
-        // Termes journalistiques
         'test', 'preview', 'review', 'news', 'actu', 'actualité', 'interview',
         'bon plan', 'promo', 'soldes', 'mise à jour', 'update', 'patch',
         'dlc', 'trailer', 'bande-annonce', 'vidéo', 'video', 'guide', 'tuto',
         'sortie', 'date', 'prix', 'gratuit', 'free', 'offert', 'exclu', 'exclusif',
-        // Plateformes
         'ps4', 'ps5', 'xbox', 'switch', 'pc', 'steam', 'epic', 'playstation', 'nintendo',
-        // Géographie (non pertinent pour les jeux)
         'chine', 'china', 'france', 'japon', 'japan', 'usa', 'europe', 'asie', 'amérique',
         'paris', 'tokyo', 'londres', 'london', 'berlin', 'new york',
-        // Mots génériques
         'jeu', 'jeux', 'game', 'games', 'gaming', 'joueur', 'joueurs', 'player', 'players',
+        'forza', 'horizon',
         'nouveau', 'nouvelle', 'nouveaux', 'nouvelles', 'new', 'premier', 'première',
         'meilleur', 'meilleure', 'best', 'top', 'pire', 'worst',
         'année', 'year', 'mois', 'month', 'semaine', 'week', 'jour', 'day', 'mémoire',
@@ -272,9 +268,20 @@ final readonly class TagExtractor
     {
         $lowerWord = mb_strtolower($word);
 
+        // Check exact match
         foreach (self::EXCLUDED_WORDS as $excluded) {
             if ($lowerWord === $excluded || $lowerWord === mb_strtolower($excluded)) {
                 return true;
+            }
+        }
+
+        // Check if any word in the phrase is excluded (for partial franchise names)
+        $words = preg_split('/\s+/', $lowerWord);
+        if (is_array($words)) {
+            foreach ($words as $singleWord) {
+                if (in_array($singleWord, self::EXCLUDED_WORDS, true)) {
+                    return true;
+                }
             }
         }
 

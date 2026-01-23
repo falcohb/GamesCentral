@@ -61,8 +61,9 @@ return [
     'God of War' => ['franchise' => 'God of War', 'pattern' => '/God\s+of\s+War(?:\s+[A-Z][a-z]+)?/u'],
     'Kratos' => ['franchise' => 'God of War', 'pattern' => '/Kratos/iu'],
 
-    // Horizon
-    'Horizon' => ['franchise' => 'Horizon', 'pattern' => '/Horizon(?:\s+(?:Zero\s+Dawn|Forbidden\s+West))?/iu'],
+    // Horizon (require subtitle to avoid matching "Forza Horizon")
+    'Horizon Zero Dawn' => ['franchise' => 'Horizon Zero Dawn', 'pattern' => '/Horizon\s+Zero\s+Dawn/iu'],
+    'Horizon Forbidden West' => ['franchise' => 'Horizon Forbidden West', 'pattern' => '/Horizon\s+Forbidden\s+West/iu'],
 
     // Spider-Man
     'Spider-Man' => ['franchise' => 'Spider-Man', 'pattern' => '/Spider-?Man(?:\s*(?:2|\d+|Miles\s+Morales))?/iu'],
@@ -100,6 +101,10 @@ return [
 
     // Halo
     'Halo' => ['franchise' => 'Halo', 'pattern' => '/Halo(?:\s+(?:Infinite|\d+))?/iu'],
+
+    // Forza
+    'Forza Horizon' => ['franchise' => 'Forza Horizon', 'pattern' => '/Forza\s+Horizon(?:\s*\d+)?/iu'],
+    'Forza Motorsport' => ['franchise' => 'Forza Motorsport', 'pattern' => '/Forza\s+Motorsport(?:\s*\d+)?/iu'],
 
     // FIFA / EA Sports FC
     'FIFA' => ['franchise' => 'FIFA', 'pattern' => '/FIFA(?:\s*\d+)?/iu'],
